@@ -1,0 +1,12 @@
+-- V1__init_schema.sql
+-- Initial schema placeholder.
+-- Add your CREATE TABLE statements here as domain models are designed.
+-- Flyway will execute this file on first startup.
+
+-- Example (uncomment and modify when ready):
+-- CREATE TABLE IF NOT EXISTS accounts (
+--     id          BIGSERIAL PRIMARY KEY,
+--     name        VARCHAR(255) NOT NULL,
+--     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+--     updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+-- );

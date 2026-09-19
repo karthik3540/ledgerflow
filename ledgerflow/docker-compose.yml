@@ -1,0 +1,57 @@
+services:
+
+  # ── PostgreSQL 16 ──────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16
+    container_name: ledgerflow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ledgerflow
+      POSTGRES_USER: ledgerflow
+      POSTGRES_PASSWORD: ledgerflow
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ledgerflow -d ledgerflow" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── Redis 7 ────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7
+    container_name: ledgerflow-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── RabbitMQ 3 (with Management UI) ───────────────────────────────────
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ledgerflow-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management UI  →  http://localhost:15672
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  postgres_data:
+    name: ledgerflow_postgres_data

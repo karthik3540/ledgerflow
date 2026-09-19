@@ -1,0 +1,26 @@
+# Maven target directories
+target/
+**/target/
+
+# Compiled class files
+*.class
+**/*.class
+
+# Log files
+*.log
+**/*.log
+
+# IDE and Editor files
+.idea/
+*.iml
+.vscode/
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test artifacts / coverage
+.system_generated/
